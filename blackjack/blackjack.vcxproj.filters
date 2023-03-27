@@ -18,5 +18,13 @@
     <ClCompile Include="blackjack.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Design.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Design.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
