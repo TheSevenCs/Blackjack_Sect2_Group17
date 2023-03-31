@@ -2,12 +2,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include "player.h"
-#include "cards.h"
-typedef struct dealer {
-	CARD dealersCards[10];
-}DEALER;
+#include "structdef.h"
+
 
 DEALER* createDealer();
 bool dealerTurn(DEALER*);
+void dealCards(PLAYER* player, DEALER* dealer);
 int calculateTotalCardValue(CARD[]);

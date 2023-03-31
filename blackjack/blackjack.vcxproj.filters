@@ -21,9 +21,30 @@
     <ClCompile Include="Design.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="actions.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dealer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Design.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dealer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="actions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="structdef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

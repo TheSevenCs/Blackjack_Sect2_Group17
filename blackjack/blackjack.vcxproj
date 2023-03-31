@@ -127,11 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="actions.c" />
     <ClCompile Include="blackjack.c" />
+    <ClCompile Include="dealer.c" />
     <ClCompile Include="Design.c" />
+    <ClCompile Include="player.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="actions.h" />
+    <ClInclude Include="dealer.h" />
     <ClInclude Include="Design.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="structdef.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

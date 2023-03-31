@@ -1,15 +1,12 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include "cards.h"
 #include <stdlib.h>
 #include <stdbool.h>
-#define _CRT_SECURE_NO_WARNINGS
-typedef struct player {
-	CARD playersCards[10];
-	int currentBetAmount;
-	int balance;
-}PLAYER;
+#include "structdef.h"
+
+
 
 PLAYER* createPlayer();
-bool playerTurn(PLAYER*);
+bool playerTurn(PLAYER*, DEALER*);
 void playerOutput();

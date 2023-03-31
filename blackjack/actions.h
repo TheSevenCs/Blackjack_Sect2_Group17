@@ -1,7 +1,12 @@
 #pragma once
-#include "player.h"
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <stdbool.h>
+#include <stdlib.h>
+#include "structdef.h"
 
-void hit(PLAYER*);
+void dHit(DEALER* dealer);
+void hit(PLAYER* player);
 bool stand();
-void doubleDown(PLAYER*);
-void bet(PLAYER*, int);
+void doubleDown(PLAYER* player);
+void bet(PLAYER* player, int betAmount);
