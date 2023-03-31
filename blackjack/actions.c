@@ -2,37 +2,54 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
-
-int main()
-{
-
-	return 0;
-}
+#include "player.h"
+#include "actions.h"
 
 
-
-int hit(int cardsValue)
+void hit(PLAYER* player)
 {
 	int randomcard = 0;
 	srand(time(0));
 	randomcard = (rand() % 13) + 1;
 	if(randomcard == 11 || randomcard == 12 || randomcard == 13){
-		cardsValue += 10;
+		player->playersCards[player->nextCard].value += 10;
 	}
 	else {
-		cardsValue += randomcard;
+		player->playersCards[player->nextCard].value += randomcard;
 	}
-	
-	return cardsValue;
-
+	player->playersCards[player->nextCard].card_id = randomcard;
+	player->nextCard++;
 }
 
 bool stand()
 {
 	char answer;
-	printf("Are you sure you want to stand? (y/n)\n");
+	printf("To confirm, type 'y' to stand:\n");
 	scanf_s("%c", answer);
 
-	return false;
+	if(answer = 'y')
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+
 }
 
+void doubleDown(PLAYER* player)
+{
+	player->balance -= player->currentBetAmount;
+
+	player->currentBetAmount * 2;
+
+}
+
+void bet(PLAYER* player, int userCash)
+{
+	player->balance -= userCash;
+
+	player->currentBetAmount = userCash;
+
+}
