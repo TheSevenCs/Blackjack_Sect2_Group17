@@ -4,10 +4,13 @@
 #include "dealer.h"
 #include "Design.h"
 #include "player.h"
+#include "structdef.h"
 #include <stdlib.h>
 
 int main()
 {
+	customizeDesign();
+	
 	DEALER* dealer = createDealer();
 	PLAYER* player = createPlayer();
 

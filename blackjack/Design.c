@@ -6,6 +6,7 @@
 #include <string.h>
 #include <wchar.h>
 #include <locale.h>
+#include <Windows.h>
 
 void initializeDesign() {
     printf("Welcome to the Blackjack Game!\n");
@@ -95,10 +96,6 @@ char* generateTable() {
     return table;
 }
 
-void customizeDesign(char* userInput) {
-    //need to implement
-}
-
 void displayASCII(const char* asciiString) {
     printf("%s\n", asciiString);
 }
@@ -107,6 +104,125 @@ void updateBetDisplay(int betAmount) {
     printf("Current bet amount: $%d\n", betAmount);
 }
 
-void setDesignOptions(DesignOptions designOptions) {
-    //need to implement 
+void setFontSize(int size) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_FONT_INFOEX cfi;
+    cfi.cbSize = sizeof(cfi);
+    cfi.nFont = 0;
+    cfi.dwFontSize.X = size;
+    cfi.dwFontSize.Y = size * 2;
+    cfi.FontFamily = FF_DONTCARE;
+    cfi.FontWeight = FW_NORMAL;
+    wcscpy(cfi.FaceName, L"Consolas");
+    SetCurrentConsoleFontEx(hConsole, FALSE, &cfi);
+}
+
+void setColor(int color) {
+    char command[20];
+    sprintf(command, "color %02X", color);
+    system(command);
+}
+
+void customizeDesign() {
+    int option;
+    int continueCustomization = 1;
+
+    while (continueCustomization) {
+      
+        system("cls");
+        printf("Choose an option to customize:\n");
+        printf("1. Change background color\n");
+        printf("2. Change text color\n");
+        printf("3. Change font size\n");
+        printf("4. Continue to the game\n");
+        printf("Enter your choice: ");
+        scanf("%d", &option);
+
+        switch (option) {
+        case 1: {
+            int color;
+            printf("Choose a background color:\n");
+            printf("1. Yellow\n");
+            printf("2. Red\n");
+            printf("3. Green\n");
+            printf("4. Blue\n");
+            printf("5. Orange\n");
+            printf("6. Purple\n");
+            printf("Enter your choice: ");
+            scanf("%d", &color);
+
+            switch (color) {
+            case 1:
+                setColor(0xE0);
+                break;
+            case 2:
+                setColor(0xC0);
+                break;
+            case 3:
+                setColor(0xA0);
+                break;
+            case 4:
+                setColor(0x90);
+                break;
+            case 5:
+                setColor(0xB0);
+                break;
+            case 6:
+                setColor(0xD0);
+                break;
+            default:
+                printf("Invalid choice!\n");
+            }
+            break;
+        }
+        case 2: {
+            int color;
+            printf("Choose a text color:\n");
+            printf("1. Yellow\n");
+            printf("2. Red\n");
+            printf("3. Green\n");
+            printf("4. Blue\n");
+            printf("5. Orange\n");
+            printf("6. Purple\n");
+            printf("Enter your choice: ");
+            scanf("%d", &color);
+
+            switch (color) {
+            case 1:
+                setColor(0x0E);
+                break;
+            case 2:
+                setColor(0x0C);
+                break;
+            case 3:
+                setColor(0x0A);
+                break;
+            case 4:
+                setColor(0x09);
+                break;
+            case 5:
+                setColor(0x0B);
+                break;
+            case 6:
+                setColor(0x0D);
+                break;
+            default:
+                printf("Invalid choice!\n");
+            }
+            break;
+        }
+        case 3: {
+            int fontSize;
+            printf("Enter the font size (recommended between 10 and 20): ");
+            scanf("%d", &fontSize);
+            setFontSize(fontSize);
+            break;
+        }
+        case 4:
+            continueCustomization = 0;
+            break;
+        default:
+            printf("Invalid choice!\n");
+        }
+    }
 }
