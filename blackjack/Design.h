@@ -15,3 +15,5 @@ void customizeDesign();
 void displayASCII(const char* asciiString);
 void updateBetDisplay(int betAmount);
 void setFontSize(int size);
+void displayWinScreen();
+void displayLoseScreen();

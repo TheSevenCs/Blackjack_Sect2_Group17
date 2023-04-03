@@ -226,3 +226,23 @@ void customizeDesign() {
         }
     }
 }
+
+void displayWinScreen() {
+    printf("╔══════════════════════════════════════╗\n");
+    printf("║                                      ║\n");
+    printf("║            Congratulations!          ║\n");
+    printf("║                                      ║\n");
+    printf("║                You won!              ║\n");
+    printf("║                                      ║\n");
+    printf("╚══════════════════════════════════════╝\n");
+}
+
+void displayLoseScreen() {
+    printf("╔══════════════════════════════════════╗\n");
+    printf("║                                      ║\n");
+    printf("║               Game Over              ║\n");
+    printf("║                                      ║\n");
+    printf("║                You lost!             ║\n");
+    printf("║                                      ║\n");
+    printf("╚══════════════════════════════════════╝\n");
+}
