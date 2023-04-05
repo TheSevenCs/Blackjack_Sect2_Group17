@@ -30,6 +30,11 @@ void updateDesign(char* userAction, CARD cardArray[], int cardArraySize) {
 }
 
 char* generateASCII(CARD cardArray[], int cardArraySize) {
+    wchar_t spade = 0x2660;
+    wchar_t heart = 0x2665;
+    wchar_t club = 0x2663;
+    wchar_t diamond = 0x2666;
+
     char* asciiCards = (char*)malloc(1024 * sizeof(char));
     strcpy(asciiCards, "");
 
@@ -41,25 +46,6 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
     strcat(asciiCards, "\n");
 
     for (int j = 0; j < cardArraySize; j++) {
-        char suit;
-        switch (cardArray[j].suit) {
-        case(1):
-            suit = 'S';
-            break;
-        case(2):
-            suit = 'H';
-            break;
-        case(3):
-            suit = 'C';
-            break;
-        case(4):
-            suit = 'D';
-            break;
-        default:
-            suit = '?'; // Unknown suit
-            break;
-        }
-
         char valueStr[10];
         switch (cardArray[j].card_id) {
         case(10):
@@ -79,8 +65,28 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
             break;
         }
 
+        wchar_t suit;
+        switch (cardArray[j].suit) {
+        case(1):
+            suit = spade;
+            break;
+        case(2):
+            suit = heart;
+            break;
+        case(3):
+            suit = club;
+            break;
+        case(4):
+            suit = diamond;
+            break;
+        default:
+            suit = '?'; // Unknown suit
+            break;
+        }
+
         char cardLine[50];
-        snprintf(cardLine, sizeof(cardLine), "|%s %c|  ", valueStr, suit);
+        snprintf(cardLine, sizeof(cardLine), "|%s", valueStr);
+        wprintf(L"%lc|  ", suit);
         strcat(asciiCards, cardLine);
     }
     strcat(asciiCards, "\n");

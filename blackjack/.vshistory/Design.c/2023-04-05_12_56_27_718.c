@@ -8,9 +8,6 @@
 #include <locale.h>
 #include <Windows.h>
 
-
-
-
 void initializeDesign() {
     printf("Welcome to the Blackjack Game!\n");
     printf("The table and cards will be displayed using ASCII characters.\n\n");
@@ -29,71 +26,72 @@ void updateDesign(char* userAction, CARD cardArray[], int cardArraySize) {
     free(asciiCards);
 }
 
-char* generateASCII(CARD cardArray[], int cardArraySize) {
-    char* asciiCards = (char*)malloc(1024 * sizeof(char));
-    strcpy(asciiCards, "");
+wchar_t* generateASCII(CARD cardArray[], int cardArraySize) {
+    setlocale(LC_CTYPE, "");
+
+    wchar_t star1 = 0x2606;
+    wchar_t* asciiCards = (wchar_t*)malloc(1024 * sizeof(wchar_t));
+    wcscpy(asciiCards, L"");
 
     for (int i = 0; i < cardArraySize; i++) {
-        char cardLine[50];
-        snprintf(cardLine, sizeof(cardLine), "+----+  ");
-        strcat(asciiCards, cardLine);
+        wchar_t cardLine[50];
+        swprintf(cardLine, sizeof(cardLine), L"+----+  ");
+        wcscat(asciiCards, cardLine);
     }
-    strcat(asciiCards, "\n");
+    wcscat(asciiCards, L"\n");
 
     for (int j = 0; j < cardArraySize; j++) {
-        char suit;
+        wchar_t cardLine[50];
+        wchar_t suit;
         switch (cardArray[j].suit) {
         case(1):
-            suit = 'S';
+            suit = L'♠';
             break;
         case(2):
-            suit = 'H';
+            suit = L'♥';
             break;
         case(3):
-            suit = 'C';
+            suit = L'♣';
             break;
         case(4):
-            suit = 'D';
+            suit = L'♦';
             break;
         default:
-            suit = '?'; // Unknown suit
+            suit = L'X';
             break;
         }
 
-        char valueStr[10];
         switch (cardArray[j].card_id) {
         case(10):
-            snprintf(valueStr, sizeof(valueStr), "10");
+            swprintf(cardLine, sizeof(cardLine), L"|10 %c|  ", suit);
             break;
         case(11):
-            snprintf(valueStr, sizeof(valueStr), "J");
+            swprintf(cardLine, sizeof(cardLine), L"|J  %c|  ", suit);
             break;
         case(12):
-            snprintf(valueStr, sizeof(valueStr), "Q");
+            swprintf(cardLine, sizeof(cardLine), L"|Q  %c|  ", suit);
             break;
         case(13):
-            snprintf(valueStr, sizeof(valueStr), "K");
+            swprintf(cardLine, sizeof(cardLine), L"|K  %c|  ", suit);
             break;
         default:
-            snprintf(valueStr, sizeof(valueStr), "%d", cardArray[j].card_id);
+            swprintf(cardLine, sizeof(cardLine), L"|%d  %c|  ", cardArray[j].card_id, suit);
             break;
         }
-
-        char cardLine[50];
-        snprintf(cardLine, sizeof(cardLine), "|%s %c|  ", valueStr, suit);
-        strcat(asciiCards, cardLine);
+        wcscat(asciiCards, cardLine);
     }
-    strcat(asciiCards, "\n");
+    wcscat(asciiCards, L"\n");
 
     for (int k = 0; k < cardArraySize; k++) {
-        char cardLine[50];
-        snprintf(cardLine, sizeof(cardLine), "+----+  ");
-        strcat(asciiCards, cardLine);
+        wchar_t cardLine[50];
+        swprintf(cardLine, sizeof(cardLine), L"+----+  ");
+        wcscat(asciiCards, cardLine);
     }
-    strcat(asciiCards, "\n");
+    wcscat(asciiCards, L"\n");
 
     return asciiCards;
 }
+
 
 char* generateTable() {
     char* table = (char*)malloc(1024 * sizeof(char));

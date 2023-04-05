@@ -6,12 +6,10 @@
 #include "player.h"
 #include "structdef.h"
 #include <stdlib.h>
-#include <wchar.h>
-#include <locale.h>
 
 int main()
 {
-	SetConsoleOutputCP(CP_UTF8);
+
 	customizeDesign();
 	
 	DEALER* dealer = createDealer();

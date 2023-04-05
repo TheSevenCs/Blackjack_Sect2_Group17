@@ -10,7 +10,7 @@ typedef struct {
 
 void initializeDesign();
 void updateDesign(char* userAction, CARD cardArray[], int cardArraySize);
-char* generateASCII(CARD cardArray[], int cardArraySize);
+wchar_t* generateASCII(CARD cardArray[], int cardArraySize);
 char* generateTable();
 void customizeDesign();
 void displayASCII(const char* asciiString);

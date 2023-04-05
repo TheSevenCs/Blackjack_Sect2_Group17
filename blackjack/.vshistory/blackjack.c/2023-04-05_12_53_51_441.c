@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include "actions.h"
 #include "dealer.h"
@@ -6,12 +6,12 @@
 #include "player.h"
 #include "structdef.h"
 #include <stdlib.h>
-#include <wchar.h>
-#include <locale.h>
+#include <windows.h>
 
 int main()
 {
 	SetConsoleOutputCP(CP_UTF8);
+
 	customizeDesign();
 	
 	DEALER* dealer = createDealer();

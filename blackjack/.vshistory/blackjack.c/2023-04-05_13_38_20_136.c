@@ -6,8 +6,6 @@
 #include "player.h"
 #include "structdef.h"
 #include <stdlib.h>
-#include <wchar.h>
-#include <locale.h>
 
 int main()
 {

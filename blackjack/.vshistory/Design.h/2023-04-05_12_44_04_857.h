@@ -1,6 +1,5 @@
 #pragma once
 #include "structdef.h"
-#include <Windows.h>
 
 typedef struct {
     char font_type[50];

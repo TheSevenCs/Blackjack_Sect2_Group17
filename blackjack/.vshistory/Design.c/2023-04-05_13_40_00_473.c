@@ -8,9 +8,6 @@
 #include <locale.h>
 #include <Windows.h>
 
-
-
-
 void initializeDesign() {
     printf("Welcome to the Blackjack Game!\n");
     printf("The table and cards will be displayed using ASCII characters.\n\n");
@@ -30,6 +27,14 @@ void updateDesign(char* userAction, CARD cardArray[], int cardArraySize) {
 }
 
 char* generateASCII(CARD cardArray[], int cardArraySize) {
+    setlocale(LC_CTYPE, "");
+    SetConsoleOutputCP(CP_UTF8);
+   
+    wchar_t spade = 0x2660;
+    wchar_t heart = 0x2665;
+    wchar_t club = 0x2663;
+    wchar_t diamond = 0x2666;
+
     char* asciiCards = (char*)malloc(1024 * sizeof(char));
     strcpy(asciiCards, "");
 
@@ -41,46 +46,43 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
     strcat(asciiCards, "\n");
 
     for (int j = 0; j < cardArraySize; j++) {
-        char suit;
+        char cardLine[50];
+        wchar_t suit;
         switch (cardArray[j].suit) {
         case(1):
-            suit = 'S';
+            suit = spade;
             break;
         case(2):
-            suit = 'H';
+            suit = heart;
             break;
         case(3):
-            suit = 'C';
+            suit = club;
             break;
         case(4):
-            suit = 'D';
+            suit = diamond;
             break;
         default:
             suit = '?'; // Unknown suit
             break;
         }
 
-        char valueStr[10];
         switch (cardArray[j].card_id) {
         case(10):
-            snprintf(valueStr, sizeof(valueStr), "10");
+            snprintf(cardLine, sizeof(cardLine), "|10 %lc|  ", suit);
             break;
         case(11):
-            snprintf(valueStr, sizeof(valueStr), "J");
+            snprintf(cardLine, sizeof(cardLine), "|J  %lc|  ", suit);
             break;
         case(12):
-            snprintf(valueStr, sizeof(valueStr), "Q");
+            snprintf(cardLine, sizeof(cardLine), "|Q  %lc|  ", suit);
             break;
         case(13):
-            snprintf(valueStr, sizeof(valueStr), "K");
+            snprintf(cardLine, sizeof(cardLine), "|K  %lc|  ", suit);
             break;
         default:
-            snprintf(valueStr, sizeof(valueStr), "%d", cardArray[j].card_id);
+            snprintf(cardLine, sizeof(cardLine), "|%d  %lc|  ", cardArray[j].card_id, suit);
             break;
         }
-
-        char cardLine[50];
-        snprintf(cardLine, sizeof(cardLine), "|%s %c|  ", valueStr, suit);
         strcat(asciiCards, cardLine);
     }
     strcat(asciiCards, "\n");
