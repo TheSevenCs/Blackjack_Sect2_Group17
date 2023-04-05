@@ -17,4 +17,3 @@ void updateBetDisplay(int betAmount);
 void setFontSize(int size);
 void displayWinScreen();
 void displayLoseScreen();
-void displayWelcomeScreen();

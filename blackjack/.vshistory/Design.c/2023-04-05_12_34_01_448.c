@@ -228,7 +228,6 @@ void customizeDesign() {
 }
 
 void displayWinScreen() {
-    system("cls");
     printf("╔══════════════════════════════════════╗\n");
     printf("║                                      ║\n");
     printf("║            Congratulations!          ║\n");
@@ -239,24 +238,11 @@ void displayWinScreen() {
 }
 
 void displayLoseScreen() {
-    system("cls");
     printf("╔══════════════════════════════════════╗\n");
     printf("║                                      ║\n");
     printf("║               Game Over              ║\n");
     printf("║                                      ║\n");
     printf("║                You lost!             ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
-}
-
-
-void displayWelcomeScreen() {
-    system("cls");
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║        Welcome to Blackjack          ║\n");
-    printf("║              Have Fun!               ║\n");
-    printf("║                                      ║\n");
     printf("║                                      ║\n");
     printf("╚══════════════════════════════════════╝\n");
 }
