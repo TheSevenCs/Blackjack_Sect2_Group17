@@ -51,18 +51,30 @@ bool stand()
 
 void doubleDown(PLAYER* player)
 {
-	player->balance -= player->currentBetAmount;
+		player->balance -= player->currentBetAmount;
 
-	player->currentBetAmount *= 2;
+		player->currentBetAmount *= 2;
 
-	hit(player);
+		hit(player);
 
-	stand();
-
+		stand();
 }
 
 void bet(PLAYER* player, int userCash)
 {
+	while (userCash <= 0)
+	{
+		printf("Incorrect Value\n");
+		printf("Please enter a new bet: ");
+		scanf("%d", &userCash);
+
+		while (userCash > player->balance)
+		{
+			printf("Insufficient Funds\n");
+			printf("Please enter a new bet: ");
+			scanf("%d", &userCash);
+		}
+	}
 	player->balance -= userCash;
 
 	player->currentBetAmount = userCash;

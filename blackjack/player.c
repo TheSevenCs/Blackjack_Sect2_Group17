@@ -4,10 +4,12 @@
 #include "Design.h"
 #include "dealer.h"
 
+#define	STARTING_BALANCE	500
+
 PLAYER* createPlayer() {
 	PLAYER* newPlayer = calloc(1, sizeof(PLAYER));
 	newPlayer->nextCard = 0;
-	newPlayer->balance = 500;
+	newPlayer->balance = STARTING_BALANCE;
 	return newPlayer;
 }
 

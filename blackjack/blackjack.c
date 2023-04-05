@@ -45,10 +45,16 @@ int main()
 		printf("\nDouble Down? (y/n): \n");
 		scanf(" %c", &doDoubleDown);
 		if (doDoubleDown == 'y') {
-			doubleDown(player);
-			updateBetDisplay(player->currentBetAmount);
-			playerStatus = false;
-			dealerStatus = false;
+			if (player->currentBetAmount * 2 > player->balance)
+			{
+				printf("Insufficient Funds\n");
+			}
+			else {
+				doubleDown(player);
+				updateBetDisplay(player->currentBetAmount);
+				playerStatus = false;
+			}
+			
 		}
 
 		else {

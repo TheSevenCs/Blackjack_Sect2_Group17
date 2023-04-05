@@ -48,16 +48,16 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
             suit = '?';
             break;
         case(1):
-            suit = '♠';
+            suit = 'S';
             break;
         case(2):
-            suit = '♥';
+            suit = 'H';
             break;
         case(3):
-            suit = '♣';
+            suit = 'C';
             break;
         case(4):
-            suit = '♦';
+            suit = 'D';
             break;
         default:
             suit = ' ';
@@ -299,7 +299,7 @@ void displayBustScreen() {
     printf("║                                      ║\n");
     printf("║              Game Over               ║\n");
     printf("║                                      ║\n");
-    printf("║              You Busted           ║\n");
+    printf("║              You Busted              ║\n");
     printf("║                                      ║\n");
     printf("╚══════════════════════════════════════╝\n");
 }
