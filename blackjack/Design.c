@@ -235,90 +235,89 @@ void customizeDesign() {
         }
     }
 }
-
 void displayWinScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║            Congratulations!          ║\n");
-    printf("║                                      ║\n");
-    printf("║                You won!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||        Congratulations!          ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||            You won!              ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 void displayDealerBustScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║             Dealer Busted!           ║\n");
-    printf("║                                      ║\n");
-    printf("║                You won!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||         Dealer Busted!           ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||            You won!              ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 
 void displayDealerBlackJackScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║         Dealer got Blackjack!        ║\n");
-    printf("║                                      ║\n");
-    printf("║               You lost!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||     Dealer got Blackjack!        ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||           You lost!              ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 
 void displayBlackJackScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║          You got a Blackjack!        ║\n");
-    printf("║                                      ║\n");
-    printf("║               You won!               ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||      You got a Blackjack!        ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||           You won!               ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 void displayTieScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║         You Tied with Dealer!        ║\n");
-    printf("║                                      ║\n");
-    printf("║            Money Returned            ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||     You Tied with Dealer!        ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||        Money Returned            ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 
 void displayLoseScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║               Game Over              ║\n");
-    printf("║                                      ║\n");
-    printf("║               You lost!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||           Game Over              ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||           You lost!              ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 
 void displayBustScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║              Game Over               ║\n");
-    printf("║                                      ║\n");
-    printf("║              You Busted           ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||          Game Over               ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||          You Busted              ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 
 void displayWelcomeScreen() {
     system("cls");
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║        Welcome to Blackjack          ║\n");
-    printf("║              Have Fun!               ║\n");
-    printf("║                                      ║\n");
-    printf("║                                      ║\n");
-    printf("║                                      ║\n");
-    printf("║          Select an Option:           ║\n");
-    printf("║                                      ║\n");
-    printf("║           1) Play Game               ║\n");
-    printf("║           2) Settings                ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
+    printf("||||                                  ||||\n");
+    printf("||||    Welcome to Blackjack          ||||\n");
+    printf("||||          Have Fun!               ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||      Select an Option:           ||||\n");
+    printf("||||                                  ||||\n");
+    printf("||||       1) Play Game               ||||\n");
+    printf("||||       2) Settings                ||||\n");
+    printf("||||                                  ||||\n");
+    printf("----||||||||||||||||||||||||||||||||----\n");
 }
 void updateScreen(PLAYER* player, DEALER* dealer) {
     printf("%s", generateTable());
