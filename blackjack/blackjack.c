@@ -5,51 +5,77 @@
 #include "Design.h"
 #include "player.h"
 #include "structdef.h"
+#include <windows.h>
 #include <stdlib.h>
 
 int main()
 {
-	customizeDesign();
-	
-	DEALER* dealer = createDealer();
-	PLAYER* player = createPlayer();
-
-	int betAmount;
-	char doDoubleDown;
-	bool playerStatus = true, dealerStatus = true;
-	initializeDesign();
-	printf("Enter your bet amount:\n");
-	scanf("%d", &betAmount);
-	bet(player, betAmount);
-	system("cls");
-
-	printf("%s", generateTable());
-	dealCards(player, dealer);
-	updateBetDisplay(player->currentBetAmount);
-
-	printf("\nType 'y' to double down?: \n");
-	scanf("  %c", &doDoubleDown);
-	if (doDoubleDown == 'y') {
-		doubleDown(player);
-		updateBetDisplay(player->currentBetAmount);
-	}
-
-	else {
-		fflush(stdin);
-	}
-	system("cls");
-	printf("%s", generateTable());
-	updateDesign("d", dealer->dealersCards, dealer->nextCard);
-	updateDesign("u", player->playersCards, player->nextCard);
-	updateBetDisplay(player->currentBetAmount);
-
-	while (playerStatus) {
-		
-		playerStatus = playerTurn(player, dealer);
-		system("cls");
-		if (calculateTotalCardValue(player->playersCards) > 21) {
-			printf("You busted! ");
-			playerStatus = false;
+	bool playAgain = true;
+	while (playAgain) {
+		int play;
+		while (true) {
+			displayWelcomeScreen();
+			fflush(stdin);
+			scanf("%d", &play);
+			system("cls");
+			if (play == 1) {
+				break;
+			}
+			else if (play == 2) {
+				customizeDesign();
+			}
+			play = NULL;
 		}
+
+		DEALER* dealer = createDealer();
+		PLAYER* player = createPlayer();
+
+		int betAmount;
+		char doDoubleDown;
+		bool playerStatus = true, dealerStatus = true;
+		initializeDesign();
+		printf("Enter your bet amount:\n");
+		scanf("%d", &betAmount);
+		bet(player, betAmount);
+		system("cls");
+
+		dealCards(player, dealer);
+		updateScreen(player, dealer);
+
+		printf("\nDouble Down? (y/n): \n");
+		scanf(" %c", &doDoubleDown);
+		if (doDoubleDown == 'y') {
+			doubleDown(player);
+			updateBetDisplay(player->currentBetAmount);
+			playerStatus = false;
+			dealerStatus = false;
+		}
+
+		else {
+			fflush(stdin);
+		}
+		updateScreen(player, dealer);
+
+		while (playerStatus) {
+			playerStatus = playerTurn(player, dealer);
+			if (calculateTotalCardValue(player->playersCards) >= 21) {
+				playerStatus = false;
+				dealerStatus = false;
+			}
+		}
+
+		revealDealerCard(dealer);
+		updateScreen(player, dealer);
+
+		while (dealerStatus) {
+			dealerStatus = dealerTurn(player, dealer);
+			Sleep(2500);
+			updateScreen(player, dealer);
+			if (calculateTotalCardValue(dealer->dealersCards) >= 21) {
+				dealerStatus = false;
+			}
+		}
+		playAgain = winConditions(player, dealer);
 	}
 }
+

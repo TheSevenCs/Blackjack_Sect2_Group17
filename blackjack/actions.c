@@ -36,7 +36,7 @@ bool stand()
 {
 	char answer;
 	printf("To confirm, type 'y' to stand:\n");
-	scanf("%c", &answer);
+	scanf(" %c", &answer);
 
 	if(answer == 'y')
 	{
@@ -54,6 +54,10 @@ void doubleDown(PLAYER* player)
 	player->balance -= player->currentBetAmount;
 
 	player->currentBetAmount *= 2;
+
+	hit(player);
+
+	stand();
 
 }
 

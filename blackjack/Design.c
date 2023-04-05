@@ -44,16 +44,24 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
         char cardLine[50];
         char suit;
         switch (cardArray[j].suit) {
+        case(0):
+            suit = '?';
+            break;
         case(1):
-            suit = "♠";
+            suit = '♠';
+            break;
         case(2):
-            suit = "♥";
+            suit = '♥';
+            break;
         case(3):
-            suit = "♣";
+            suit = '♣';
+            break;
         case(4):
-            suit = "♦";
+            suit = '♦';
+            break;
         default:
-            suit = "ERROR";
+            suit = ' ';
+            break;
         }
 
         switch (cardArray[j].card_id) {
@@ -88,6 +96,7 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
 }
 
 char* generateTable() {
+    system("cls");
     char* table = (char*)malloc(1024 * sizeof(char));
     strcpy(table, "-----------------------------\n");
     strcat(table, "|          Blackjack         |\n");
@@ -134,7 +143,7 @@ void customizeDesign() {
         printf("1. Change background color\n");
         printf("2. Change text color\n");
         printf("3. Change font size\n");
-        printf("4. Continue to the game\n");
+        printf("4. Done\n");
         printf("Enter your choice: ");
         scanf("%d", &option);
 
@@ -228,7 +237,6 @@ void customizeDesign() {
 }
 
 void displayWinScreen() {
-    system("cls");
     printf("╔══════════════════════════════════════╗\n");
     printf("║                                      ║\n");
     printf("║            Congratulations!          ║\n");
@@ -237,18 +245,64 @@ void displayWinScreen() {
     printf("║                                      ║\n");
     printf("╚══════════════════════════════════════╝\n");
 }
-
-void displayLoseScreen() {
-    system("cls");
+void displayDealerBustScreen() {
     printf("╔══════════════════════════════════════╗\n");
     printf("║                                      ║\n");
-    printf("║               Game Over              ║\n");
+    printf("║             Dealer Busted!           ║\n");
     printf("║                                      ║\n");
-    printf("║                You lost!             ║\n");
+    printf("║                You won!              ║\n");
     printf("║                                      ║\n");
     printf("╚══════════════════════════════════════╝\n");
 }
 
+void displayDealerBlackJackScreen() {
+    printf("╔══════════════════════════════════════╗\n");
+    printf("║                                      ║\n");
+    printf("║         Dealer got Blackjack!        ║\n");
+    printf("║                                      ║\n");
+    printf("║               You lost!              ║\n");
+    printf("║                                      ║\n");
+    printf("╚══════════════════════════════════════╝\n");
+}
+
+void displayBlackJackScreen() {
+    printf("╔══════════════════════════════════════╗\n");
+    printf("║                                      ║\n");
+    printf("║          You got a Blackjack!        ║\n");
+    printf("║                                      ║\n");
+    printf("║               You won!               ║\n");
+    printf("║                                      ║\n");
+    printf("╚══════════════════════════════════════╝\n");
+}
+void displayTieScreen() {
+    printf("╔══════════════════════════════════════╗\n");
+    printf("║                                      ║\n");
+    printf("║         You Tied with Dealer!        ║\n");
+    printf("║                                      ║\n");
+    printf("║            Money Returned            ║\n");
+    printf("║                                      ║\n");
+    printf("╚══════════════════════════════════════╝\n");
+}
+
+void displayLoseScreen() {
+    printf("╔══════════════════════════════════════╗\n");
+    printf("║                                      ║\n");
+    printf("║               Game Over              ║\n");
+    printf("║                                      ║\n");
+    printf("║               You lost!              ║\n");
+    printf("║                                      ║\n");
+    printf("╚══════════════════════════════════════╝\n");
+}
+
+void displayBustScreen() {
+    printf("╔══════════════════════════════════════╗\n");
+    printf("║                                      ║\n");
+    printf("║              Game Over               ║\n");
+    printf("║                                      ║\n");
+    printf("║              You Busted           ║\n");
+    printf("║                                      ║\n");
+    printf("╚══════════════════════════════════════╝\n");
+}
 
 void displayWelcomeScreen() {
     system("cls");
@@ -258,5 +312,17 @@ void displayWelcomeScreen() {
     printf("║              Have Fun!               ║\n");
     printf("║                                      ║\n");
     printf("║                                      ║\n");
+    printf("║                                      ║\n");
+    printf("║          Select an Option:           ║\n");
+    printf("║                                      ║\n");
+    printf("║           1) Play Game               ║\n");
+    printf("║           2) Settings                ║\n");
+    printf("║                                      ║\n");
     printf("╚══════════════════════════════════════╝\n");
+}
+void updateScreen(PLAYER* player, DEALER* dealer) {
+    printf("%s", generateTable());
+    updateDesign("d", dealer->dealersCards, dealer->nextCard);
+    updateDesign("u", player->playersCards, player->nextCard);
+    updateBetDisplay(player->currentBetAmount);
 }
