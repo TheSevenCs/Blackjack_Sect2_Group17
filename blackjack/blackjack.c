@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include "actions.h"
 #include "dealer.h"
@@ -7,9 +7,12 @@
 #include "structdef.h"
 #include <windows.h>
 #include <stdlib.h>
+#include <wchar.h>
+#include <locale.h>
 
 int main(int argc, char *argv[])
 {
+  SetConsoleOutputCP(CP_UTF8);
 	int color = 0x07;
 	FILE* fPtr, *write;
 	if (argc < 2) {
