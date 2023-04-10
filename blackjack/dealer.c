@@ -16,7 +16,7 @@ bool dealerTurn(PLAYER* player, DEALER* dealer) {
 	printf("%s", generateTable());
 	updateScreen(player, dealer);
 
-	if (calculateTotalCardValue(dealer->dealersCards) >= 17) {
+	if (calculateTotalCardValue(dealer->dealersCards, dealer->nextCard) >= 17) {
 		standStatus = false;
 	}
 	else {
@@ -27,15 +27,34 @@ bool dealerTurn(PLAYER* player, DEALER* dealer) {
 
 
 
-int calculateTotalCardValue(CARD list[]) {
-	int i = 0, total = 0;
-	while (list[i].value != 0) {
+int calculateTotalCardValue(CARD list[], int index) {
+	int total = 0, aceCount = 0;
+	for(int i = 0; i < index; i++){
+		if (list[i].value == 11) {
+			aceCount++;
+		}
 		total += list[i].value;
-		i++;
+	}
+	
+	for (int j = index; j > 0; j--) {
+		if (total > 21 && aceCount > 0) {
+			if (changeAce(list[j])) {
+				list[j].value >>= 3;
+				total -= 10;
+				aceCount--;
+			}
+		}
+		else { break; }
 	}
 	return total;
 }
 
+bool changeAce(CARD card) {
+	if (card.value == 11){
+		return true;
+	}
+	return false;
+}
 void dealCards(PLAYER* player, DEALER* dealer) {
 	dHit(dealer);
 	hit(player);
@@ -50,17 +69,24 @@ void revealDealerCard(DEALER* dealer) {
 }
 
 bool winConditions(PLAYER* player, DEALER* dealer) {
-	int pValue = calculateTotalCardValue(player->playersCards), dValue = calculateTotalCardValue(dealer->dealersCards);
+	int pValue = calculateTotalCardValue(player->playersCards, player->nextCard), dValue = calculateTotalCardValue(dealer->dealersCards, dealer->nextCard);
 	char choice;
+	FILE* fPtr;
 	Sleep(1500);
 	printf("\n");
 	if (pValue > 21) {
 		displayBustScreen();
 	}
 	else if (dValue > 21) {
+		player->balance += player->currentBetAmount * 2;
 		displayDealerBustScreen();
 	}
+	else if (dValue == pValue) {
+		player->balance += player->currentBetAmount;
+		displayTieScreen();
+	}
 	else if (pValue == 21) {
+		player->balance += player->currentBetAmount * 2;
 		displayBlackJackScreen();
 	}
 	else if (dValue == 21) {
@@ -73,11 +99,9 @@ bool winConditions(PLAYER* player, DEALER* dealer) {
 	else if (dValue > pValue) {
 		displayLoseScreen();
 	}
-	else if (dValue == pValue) {
-		player->balance += player->currentBetAmount;
-		displayTieScreen();
-	}
-	printf("\n\nType 'y' to play again\n");
+	
+
+	printf("\n\Would you like to play again? (y/n)\n");
 	scanf(" %c", &choice);
 	if (choice == 'y') {
 		return true;

@@ -1,6 +1,7 @@
 ﻿//Design Module - Dominic Szymanski - 03/26/2023
 #define _CRT_SECURE_NO_WARNINGS
 #include "Design.h"
+#include "dealer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,20 +10,35 @@
 #include <Windows.h>
 
 void initializeDesign() {
-    printf("Welcome to the Blackjack Game!\n");
-    printf("The table and cards will be displayed using ASCII characters.\n\n");
+    printf("----||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||----\n");
+    printf("||||             Welcome to the Blackjack Game!                     ||||\n");
+    printf("||||  The table and cards will be displayed using ASCII characters. ||||\n");
+    printf("----||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||----\n");
 }
 
 void updateDesign(char* userAction, CARD cardArray[], int cardArraySize) {
     if (userAction == "d") {
-        printf("Dealers Hand:");
+        if (calculateTotalCardValue(cardArray, cardArraySize) < 10) {
+            printf("||||       Dealers Hand: %d            ||||", calculateTotalCardValue(cardArray, cardArraySize));
+        }
+        else {
+            printf("||||       Dealers Hand: %d           ||||", calculateTotalCardValue(cardArray, cardArraySize));
+        }
     }
     else if (userAction == "u") {
-        printf("Your Hand:");
+        if (calculateTotalCardValue(cardArray, cardArraySize) < 10) {
+            printf("||||          Your Hand: %d            ||||", calculateTotalCardValue(cardArray, cardArraySize));
+        }
+        else {
+            printf("||||          Your Hand: %d           ||||", calculateTotalCardValue(cardArray, cardArraySize));
+        }
     }
-    printf("\n\n");
+    printf("\n||||                                  ||||\n");
+    displayBorderVertical();
     char* asciiCards = generateASCII(cardArray, cardArraySize);
-    printf("%s\n", asciiCards);
+    printf("%s", asciiCards);
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
     free(asciiCards);
 }
 
@@ -44,20 +60,17 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
         char cardLine[50];
         char suit;
         switch (cardArray[j].suit) {
-        case(0):
-            suit = '?';
-            break;
         case(1):
-            suit = '♠';
+            suit = 'S';
             break;
         case(2):
-            suit = '♥';
+            suit = 'H';
             break;
         case(3):
-            suit = '♣';
+            suit = 'C';
             break;
         case(4):
-            suit = '♦';
+            suit = 'D';
             break;
         default:
             suit = ' ';
@@ -65,6 +78,12 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
         }
 
         switch (cardArray[j].card_id) {
+        case(1 || 11):
+            snprintf(cardLine, sizeof(cardLine), "|A  %c|  ", suit);
+            break;
+        case(0):
+            snprintf(cardLine, sizeof(cardLine), "|?  ?|  ");
+            break;
         case(10):
             snprintf(cardLine, sizeof(cardLine), "|10 %c|  ", suit);
             break;
@@ -98,9 +117,12 @@ char* generateASCII(CARD cardArray[], int cardArraySize) {
 char* generateTable() {
     system("cls");
     char* table = (char*)malloc(1024 * sizeof(char));
-    strcpy(table, "-----------------------------\n");
-    strcat(table, "|          Blackjack         |\n");
-    strcat(table, "-----------------------------\n");
+    strcpy(table, "----||||||||||||||||||||||||||||||||||----\n");
+    strcat(table, "||||                                  ||||\n");
+    strcat(table, "||||            BlackJack             ||||\n");
+    strcat(table, "||||                                  ||||\n");
+    strcat(table, "----||||||||||||||||||||||||||||||||||----\n");
+    strcat(table, "||||                                  ||||\n");
 
     return table;
 }
@@ -110,19 +132,28 @@ void displayASCII(const char* asciiString) {
 }
 
 void updateBetDisplay(int betAmount) {
-    printf("Current bet amount: $%d\n", betAmount);
+    printf("||||        Current bet: $%d", betAmount);
+    int length = 1, num = betAmount;
+    while (num >= 10) {
+        num = num / 10;
+        ++length;
+    }
+    for (int i = length; i < 10; i++) {
+        printf(" ");
+    }
+    printf("  ||||\n");
 }
 
 void setFontSize(int size) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_FONT_INFOEX cfi;
-    cfi.cbSize = sizeof(cfi);
-    cfi.nFont = 0;
-    cfi.dwFontSize.X = size;
-    cfi.dwFontSize.Y = size * 2;
-    cfi.FontFamily = FF_DONTCARE;
-    cfi.FontWeight = FW_NORMAL;
-    wcscpy(cfi.FaceName, L"Consolas");
+    CONSOLE_FONT_INFOEX* cfi = (CONSOLE_FONT_INFOEX*)calloc(1, sizeof(CONSOLE_FONT_INFOEX));
+    cfi->cbSize = sizeof(cfi);
+    cfi->nFont = 1;
+    cfi->dwFontSize.X = size;
+    cfi->dwFontSize.Y = size * 2;
+    cfi->FontFamily = FF_DONTCARE;
+    cfi->FontWeight = FW_NORMAL;
+    wcscpy(cfi->FaceName, L"Consolas");
     SetCurrentConsoleFontEx(hConsole, FALSE, &cfi);
 }
 
@@ -132,10 +163,11 @@ void setColor(int color) {
     system(command);
 }
 
-void customizeDesign() {
+int customizeDesign() {
     int option;
     int continueCustomization = 1;
-
+    int background = 0;
+    int colorChoice = 0;
     while (continueCustomization) {
       
         system("cls");
@@ -157,27 +189,34 @@ void customizeDesign() {
             printf("4. Blue\n");
             printf("5. Orange\n");
             printf("6. Purple\n");
+            printf("7. Black\n");
+            printf("8. White\n");
             printf("Enter your choice: ");
             scanf("%d", &color);
-
             switch (color) {
             case 1:
-                setColor(0xE0);
+                background = 0xE0;
                 break;
             case 2:
-                setColor(0xC0);
+                background = 0xC0;
                 break;
             case 3:
-                setColor(0xA0);
+                background = 0x20;
                 break;
             case 4:
-                setColor(0x90);
+                background = 0x90;
                 break;
             case 5:
-                setColor(0xB0);
+                background = 0xB0;
                 break;
             case 6:
-                setColor(0xD0);
+                background = 0xD0;
+                break;
+            case 7:
+                background = 0x00;
+                break;
+            case 8:
+                background = 0x70;
                 break;
             default:
                 printf("Invalid choice!\n");
@@ -193,27 +232,35 @@ void customizeDesign() {
             printf("4. Blue\n");
             printf("5. Orange\n");
             printf("6. Purple\n");
-            printf("Enter your choice: ");
+            printf("7. Black\n");
+            printf("8. White\n");
+;           printf("Enter your choice: ");
             scanf("%d", &color);
 
             switch (color) {
             case 1:
-                setColor(0x0E);
+                colorChoice = 0x0E;
                 break;
             case 2:
-                setColor(0x0C);
+                colorChoice = 0x0C;
                 break;
             case 3:
-                setColor(0x0A);
+                colorChoice = 0x0A;
                 break;
             case 4:
-                setColor(0x09);
+                colorChoice = 0x09;
                 break;
             case 5:
-                setColor(0x0B);
+                colorChoice = 0x0B;
                 break;
             case 6:
-                setColor(0x0D);
+                colorChoice = 0x0D;
+                break;
+            case 7:
+                colorChoice = 0x00;
+                break;
+            case 8:
+                colorChoice = 0x07;
                 break;
             default:
                 printf("Invalid choice!\n");
@@ -233,96 +280,117 @@ void customizeDesign() {
         default:
             printf("Invalid choice!\n");
         }
+        setColor(background + colorChoice);
     }
+    return background + colorChoice;
+}
+
+void displayBalance(PLAYER* player) {
+    printf("||||        Balance: $%d", player->balance);
+    int length = 1, num = player->balance;
+    while(num >= 10) {
+        num = num / 10;
+        ++length;
+    }
+    for (int i = length; i < 10; i++) {
+        printf(" ");
+    }
+    printf("      ||||\n");
 }
 
 void displayWinScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║            Congratulations!          ║\n");
-    printf("║                                      ║\n");
-    printf("║                You won!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
+    printf("||||        Congratulations!          ||||\n");
+    displayBorderHorizontalEmpty();
+    printf("||||            You won!              ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderVertical();
 }
 void displayDealerBustScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║             Dealer Busted!           ║\n");
-    printf("║                                      ║\n");
-    printf("║                You won!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
+    printf("||||         Dealer Busted!           ||||\n");
+    displayBorderHorizontalEmpty();
+    printf("||||            You won!              ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderVertical();
 }
 
 void displayDealerBlackJackScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║         Dealer got Blackjack!        ║\n");
-    printf("║                                      ║\n");
-    printf("║               You lost!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
+    printf("||||     Dealer got Blackjack!        ||||\n");
+    displayBorderHorizontalEmpty();
+    printf("||||           You lost!              ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderVertical();
 }
 
 void displayBlackJackScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║          You got a Blackjack!        ║\n");
-    printf("║                                      ║\n");
-    printf("║               You won!               ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
+    printf("||||      You got a Blackjack!        ||||\n");
+    displayBorderHorizontalEmpty();
+    printf("||||           You won!               ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderVertical();
 }
 void displayTieScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║         You Tied with Dealer!        ║\n");
-    printf("║                                      ║\n");
-    printf("║            Money Returned            ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
+    printf("||||     You Tied with Dealer!        ||||\n");
+    displayBorderHorizontalEmpty();
+    printf("||||        Money Returned            ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderVertical();
 }
 
 void displayLoseScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║               Game Over              ║\n");
-    printf("║                                      ║\n");
-    printf("║               You lost!              ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
+    printf("||||           Game Over              ||||\n");
+    displayBorderHorizontalEmpty();
+    printf("||||           You lost!              ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderVertical();
 }
 
 void displayBustScreen() {
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║              Game Over               ║\n");
-    printf("║                                      ║\n");
-    printf("║              You Busted           ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();;
+    printf("||||          Game Over               ||||\n");
+    displayBorderHorizontalEmpty();;
+    printf("||||          You Busted              ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderVertical();
 }
 
 void displayWelcomeScreen() {
     system("cls");
-    printf("╔══════════════════════════════════════╗\n");
-    printf("║                                      ║\n");
-    printf("║        Welcome to Blackjack          ║\n");
-    printf("║              Have Fun!               ║\n");
-    printf("║                                      ║\n");
-    printf("║                                      ║\n");
-    printf("║                                      ║\n");
-    printf("║          Select an Option:           ║\n");
-    printf("║                                      ║\n");
-    printf("║           1) Play Game               ║\n");
-    printf("║           2) Settings                ║\n");
-    printf("║                                      ║\n");
-    printf("╚══════════════════════════════════════╝\n");
+    displayBorderVertical();
+    displayBorderHorizontalEmpty();
+    printf("||||    Welcome to Blackjack          ||||\n");
+    printf("||||          Have Fun!               ||||\n");
+    displayBorderHorizontalEmpty();
+    displayBorderHorizontalEmpty();
+    displayBorderHorizontalEmpty();
+    printf("||||      Select an Option:           ||||\n");
+    displayBorderHorizontalEmpty();
+    printf("||||       1) Play Game               ||||\n");
+    printf("||||       2) Settings                ||||\n");
+    displayBorderVertical();
+}
+void displayBorderVertical() {
+    printf("----||||||||||||||||||||||||||||||||||----\n");
+}
+void displayBorderHorizontalEmpty() {
+    printf("||||                                  ||||\n");
 }
 void updateScreen(PLAYER* player, DEALER* dealer) {
     printf("%s", generateTable());
     updateDesign("d", dealer->dealersCards, dealer->nextCard);
     updateDesign("u", player->playersCards, player->nextCard);
     updateBetDisplay(player->currentBetAmount);
+    displayBalance(player);
 }

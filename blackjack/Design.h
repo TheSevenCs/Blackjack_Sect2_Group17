@@ -11,7 +11,7 @@ void initializeDesign();
 void updateDesign(char* userAction, CARD cardArray[], int cardArraySize);
 char* generateASCII(CARD cardArray[], int cardArraySize);
 char* generateTable();
-void customizeDesign();
+int customizeDesign();
 void displayASCII(const char* asciiString);
 void updateBetDisplay(int betAmount);
 void setFontSize(int size);
@@ -24,3 +24,8 @@ void updateScreen(PLAYER* player, DEALER* dealer);
 void displayTieScreen();
 void displayDealerBlackJackScreen();
 void displayBlackJackScreen();
+void setColor(int);
+void displayBalance(PLAYER* player);
+
+void displayBorderHorizontalEmpty();
+void displayBorderVertical();

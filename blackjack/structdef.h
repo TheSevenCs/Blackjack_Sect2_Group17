@@ -7,13 +7,13 @@ typedef struct cards {
 }CARD;
 
 typedef struct {
-	CARD playersCards[10];
+	CARD playersCards[21];
 	int nextCard;
 	int currentBetAmount;
 	int balance;
 }PLAYER;
 
 typedef struct dealer {
-	CARD dealersCards[10];
+	CARD dealersCards[21];
 	int nextCard;
 }DEALER;

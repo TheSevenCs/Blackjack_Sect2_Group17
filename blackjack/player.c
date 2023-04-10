@@ -3,11 +3,12 @@
 #include "actions.h"
 #include "Design.h"
 #include "dealer.h"
+#define	STARTING_BALANCE	500
 
 PLAYER* createPlayer() {
 	PLAYER* newPlayer = calloc(1, sizeof(PLAYER));
 	newPlayer->nextCard = 0;
-	newPlayer->balance = 500;
+	newPlayer->balance = STARTING_BALANCE;
 	return newPlayer;
 }
 
@@ -16,14 +17,15 @@ bool playerTurn(PLAYER* player, DEALER* dealer){
 	playerOutput();
 	scanf("%d", &choice);
 	printf("%s", generateTable());
-	updateDesign("d", dealer->dealersCards, dealer->nextCard);
+	
+	("d", dealer->dealersCards, dealer->nextCard);
 	switch (choice) {
 	case(1):
 		hit(player);
 		break;
 	case(2):
 
-		updateDesign("u", player->playersCards, player->nextCard);
+		updateScreen(player, dealer);
 		return stand();
 		break;
 	default:
@@ -31,12 +33,16 @@ bool playerTurn(PLAYER* player, DEALER* dealer){
 		fflush(stdin);
 		break;
 	}
-	updateDesign("u", player->playersCards, player->nextCard);
+	updateScreen(player, dealer);
 	return true;
 }
 
 void playerOutput() {
-	printf("\nEnter a number from below:\n\n");
-	printf("1) Hit\n");
-	printf("2) Stand\n");
+	displayBorderHorizontalEmpty();
+	printf("||||    Enter a number from below:    ||||\n");
+	displayBorderHorizontalEmpty();
+	printf("||||             1) Hit               ||||\n");
+	printf("||||             2) Stand             ||||\n");
+	displayBorderHorizontalEmpty();
+	displayBorderVertical();
 }
