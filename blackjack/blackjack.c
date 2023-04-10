@@ -12,7 +12,6 @@
 
 int main(int argc, char *argv[])
 {
-  SetConsoleOutputCP(CP_UTF8);
 	int color = 0x07;
 	FILE* fPtr, *write;
 	if (argc < 2) {
@@ -31,8 +30,8 @@ int main(int argc, char *argv[])
 		if (fPtr = fopen(argv[1], "r")) {
 			fscanf(fPtr, "%d %d", &player->balance, &color);
 			setColor(color);
+			fclose(fPtr);
 		}
-		fclose(fPtr);
 		int play;
 		while (true) {
 			displayWelcomeScreen();
